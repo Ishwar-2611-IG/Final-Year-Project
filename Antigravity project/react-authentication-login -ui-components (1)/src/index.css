@@ -1,0 +1,649 @@
+/* ================================================================
+   MedBlock — Global Styles
+   Includes base UI + ENHANCEMENT-layer additions.
+   ================================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #05070d;
+  --bg2: #0b0f1a;
+  --surface: rgba(16, 20, 34, 0.75);
+  --surface2: rgba(255, 255, 255, 0.04);
+  --surface3: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: #f1f5f9;
+  --text2: #cbd5e1;
+  --muted: #8b93a7;
+  --primary: #6366f1;
+  --primary-2: #818cf8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Role gradients */
+  --patient-grad: linear-gradient(135deg, #0ea5e9, #0284c7);
+  --doctor-grad: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  --hospital-grad: linear-gradient(135deg, #10b981, #059669);
+  --admin-grad: linear-gradient(135deg, #6366f1, #4338ca);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ENHANCEMENT: Reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Background ─────────────────────────────────────────────── */
+.login-bg {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px 16px 60px;
+  background:
+    radial-gradient(1200px 600px at 10% 0%, rgba(99, 102, 241, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 90% 20%, rgba(16, 185, 129, 0.15), transparent 60%),
+    radial-gradient(800px 500px at 50% 100%, rgba(14, 165, 233, 0.14), transparent 60%),
+    linear-gradient(180deg, #05070d 0%, #0a0f1c 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Subtle grid overlay */
+.login-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ENHANCEMENT: Floating orbs */
+.mb-orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.mb-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  animation: mb-float 18s ease-in-out infinite;
+}
+.mb-orb-1 {
+  width: 380px;
+  height: 380px;
+  background: #6366f1;
+  top: -120px;
+  left: -80px;
+}
+.mb-orb-2 {
+  width: 320px;
+  height: 320px;
+  background: #10b981;
+  bottom: -100px;
+  right: -60px;
+  animation-delay: -6s;
+}
+.mb-orb-3 {
+  width: 260px;
+  height: 260px;
+  background: #0ea5e9;
+  top: 40%;
+  right: 20%;
+  animation-delay: -12s;
+}
+@keyframes mb-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+/* ── Login Card ─────────────────────────────────────────────── */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  margin-top: 16px;
+  background: rgba(12, 16, 28, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 26px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+}
+
+/* Slide-up entrance */
+.anim-slide-up {
+  animation: mb-slide-up 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes mb-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Role Tabs ──────────────────────────────────────────────── */
+.role-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+.role-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 6px;
+  border-radius: 9px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.role-tab:hover {
+  color: var(--text2);
+  background: rgba(255, 255, 255, 0.03);
+}
+.role-tab.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.role-tab:focus-visible {
+  outline: 2px solid var(--primary-2);
+  outline-offset: 2px;
+}
+
+/* ── Cards / Form ───────────────────────────────────────────── */
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+.input:hover {
+  border-color: var(--border-strong);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--primary-2);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 420px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+  text-decoration: none;
+}
+.btn:hover:not(:disabled) {
+  background: var(--surface3);
+  border-color: var(--border-strong);
+}
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--primary-2);
+  outline-offset: 2px;
+}
+.btn-primary {
+  background: var(--admin-grad);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(99, 102, 241, 0.45);
+  background: var(--admin-grad);
+}
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text2);
+}
+.btn-ghost:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.78rem;
+}
+
+/* ── Alerts ─────────────────────────────────────────────────── */
+.alert {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  margin-bottom: 12px;
+  border: 1px solid;
+}
+.alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+.alert-success {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+/* ── Misc ───────────────────────────────────────────────────── */
+code {
+  background: var(--surface2);
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: var(--primary-2);
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* ================================================================
+   ENHANCEMENTS — each section is removable
+   ================================================================ */
+
+/* ENHANCEMENT: Connection status bar */
+.mb-status-bar {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+  justify-content: center;
+}
+.mb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  color: var(--text2);
+  font-weight: 500;
+}
+.mb-pill-network {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.mb-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  position: relative;
+}
+.mb-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.3;
+  animation: mb-pulse 2s ease-out infinite;
+}
+.mb-dot-amber {
+  background: #f59e0b;
+  color: #f59e0b;
+}
+@keyframes mb-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* ENHANCEMENT: Spin animation */
+.mb-spin {
+  animation: mb-spin 1s linear infinite;
+}
+@keyframes mb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ENHANCEMENT: Inline button spinner */
+.mb-spin-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: mb-spin 0.75s linear infinite;
+}
+
+/* ENHANCEMENT: Skeleton shimmer */
+@keyframes mb-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ENHANCEMENT: Remember me + Forgot row */
+.mb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 14px;
+  font-size: 0.78rem;
+}
+.mb-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text2);
+  user-select: none;
+}
+.mb-checkbox input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.mb-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.mb-checkbox input:checked + .mb-check {
+  background: var(--admin-grad);
+  border-color: transparent;
+}
+.mb-checkbox input:checked + .mb-check::after {
+  content: '✓';
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+.mb-checkbox input:focus-visible + .mb-check {
+  outline: 2px solid var(--primary-2);
+  outline-offset: 2px;
+}
+.mb-link {
+  background: transparent;
+  border: none;
+  color: var(--primary-2);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  padding: 0;
+}
+.mb-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ENHANCEMENT: Keyboard hint */
+.mb-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.mb-hint kbd {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  color: var(--text2);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ENHANCEMENT: Feature highlights strip */
+.mb-feature-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.mb-feature-strip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+}
+
+/* ENHANCEMENT: Trust badges */
+.mb-trust {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.mb-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  background: var(--surface2);
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-align: center;
+  transition: all 0.15s;
+}
+.mb-trust-item i {
+  font-size: 1rem;
+  color: var(--primary-2);
+}
+.mb-trust-item:hover {
+  background: var(--surface3);
+  color: var(--text2);
+  transform: translateY(-2px);
+}
+@media (max-width: 420px) {
+  .mb-trust {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ENHANCEMENT: Password strength tips */
+.pw-tips {
+  margin-top: 6px;
+}
+
+/* ENHANCEMENT: Mobile tweaks */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+  .role-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mb-status-bar {
+    padding: 0 4px;
+  }
+  .mb-feature-strip {
+    font-size: 0.68rem;
+  }
+}
+
+/* ENHANCEMENT: Focus visibility for all interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--primary-2);
+  outline-offset: 2px;
+}
+
+/* ENHANCEMENT: Toast animation helper (handled in component) */
+.mb-toast {
+  will-change: transform, opacity;
+}
+
+/* ENHANCEMENT: Smooth gradient text for the brand */
+.login-card span[style*='font-size: 1.6rem'] {
+  background: linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

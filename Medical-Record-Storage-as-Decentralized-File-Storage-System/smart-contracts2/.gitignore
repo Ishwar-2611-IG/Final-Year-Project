@@ -1,0 +1,7 @@
+# Hardhat generated — always safe to delete and rebuild
+artifacts/
+cache/
+node_modules/
+
+# Environment
+.env
